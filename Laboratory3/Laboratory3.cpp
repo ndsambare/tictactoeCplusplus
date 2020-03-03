@@ -4,18 +4,31 @@
 #include <iostream>
 #include <string>
 #include "Dimensions.h"
+#include "Header.h"
+#include "TicTacToeGame.h"
 using namespace std;
 
 
-ostream& operator << (ostream& output, const TicTacToeGame& game) {
-
-}
 
 
 
-int main()
+
+int main(int argc, char * argv[])
 {
-    std::cout << "Hello World!\n";
+	if (argc == correctNumArgs) {
+	
+		string word = argv[inputName];
+		if (word == "TicTacToe") {
+		     TicTacToeGame game; 
+			int playReturn = game.play(); 
+			return playReturn; 
+
+
+		}
+		else {
+			 return usageFunction(argv[programName], "Laboratory3.exe TicTacToe");
+		}
+   }
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

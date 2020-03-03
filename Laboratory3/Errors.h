@@ -1,2 +1,2 @@
 #pragma once
-enum erros {success, quitGame};
+enum erros {success, quitGame, drawGame, failedUsageMessage};
