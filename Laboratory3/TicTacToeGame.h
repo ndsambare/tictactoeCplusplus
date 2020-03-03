@@ -13,9 +13,7 @@ class TicTacToeGame {
 
 
 public:
-	TicTacToeGame() {
-
-	};
+	TicTacToeGame();
 	bool done();
 	bool draw();
 	int prompt(unsigned int& alpha, unsigned int& beta);
@@ -24,9 +22,9 @@ public:
 
 private:
 	char gameBoard[width][height];
-	const int width = width;
-	const int height = height;
-	bool playerXTurn = true; 
+	const int width;
+	const int height;
+	int turnNumber; 
 
 }; 
 

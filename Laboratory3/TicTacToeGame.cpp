@@ -7,22 +7,36 @@
 
 using namespace std;
 
+TicTacToeGame::TicTacToeGame()
+	: width(5), height(5), turnNumber(0)
+{
+	for (int i = 0; i < height; i++) {
+		
+		for (int j = 0; j < width; j++) {
 
+
+			gameBoard[i][j] = ' ';
+		}
+
+	}
+
+}
 
 ostream& operator << (ostream& output, const TicTacToeGame& game) {
 
 	for (int i = height -1; i >= 0; i--) {
-	cout << i << endl;
+	output << i ;
 		for (int j = 0; j < width; j++) {
 			
 		
-			cout << game.gameBoard[i][j] << endl; 
+			output << game.gameBoard[j][i]; 
 		}
-	
-	}
 
+		output << endl; 
+	}
+	cout << ' '; 
 	for (int k = 0; k < width; k++) {
-	cout << k << endl; 
+	output << k; 
 	}
  
 
@@ -34,19 +48,19 @@ bool TicTacToeGame::done() {
 
 		for (int j = 1; j <= height -2; j++) {
 
-			if (gameBoard[i][j] == gameBoard[i - 1][j] == gameBoard[i + 1][j]) {
+			if (gameBoard[i][j] == gameBoard[i - 1][j] && gameBoard[i][j] == gameBoard[i + 1][j] && gameBoard[i][j] != ' ') {
 				return true; 
 			}
 
-			if (gameBoard[i][j] == gameBoard[i][j - 1] == gameBoard[i][j + 1]) {
+			if (gameBoard[i][j] ==  gameBoard[i][j - 1] && gameBoard[i][j] == gameBoard[i][j + 1] && gameBoard[i][j] != ' ') {
 				return true; 
 			}
 
-			if (gameBoard[i][j] == gameBoard[i - 1][j - 1] == gameBoard[i + 1][j + 1]) {
+			if (gameBoard[i][j] ==  gameBoard[i - 1][j - 1] && gameBoard[i][j] == gameBoard[i + 1][j + 1] && gameBoard[i][j] != ' ') {
 				return true; 
 			}
 
-			if (gameBoard[i][j] == gameBoard[i + 1][j - 1] == gameBoard[i - 1][j + 1]) {
+			if (gameBoard[i][j] ==  gameBoard[i + 1][j - 1] && gameBoard[i][j] == gameBoard[i - 1][j + 1] && gameBoard[i][j] != ' ') {
 				return true; 
 			}
 		
@@ -68,7 +82,7 @@ bool TicTacToeGame::draw() {
 
 int TicTacToeGame::prompt(unsigned int& alpha, unsigned int& beta)
 {
-	cout << "Type where you want to put your piece as a comma separated coordinate (e.g 2,2) or type 'quit' to end the game";
+	cout << "Type where you want to put your piece as a comma separated coordinate (e.g 2,2) or type 'quit' to end the game ";
 
 
 	string inputString;
@@ -81,20 +95,25 @@ int TicTacToeGame::prompt(unsigned int& alpha, unsigned int& beta)
 			}
 		}
 
+		
+
 		if (inputString != "quit") {
 
 			istringstream iss(inputString);
 			if (iss >> alpha) {
-
+				
 				if (iss >> beta) {
+					
 					return success;
 				}
 				else {
-					cout << "Type where you want to put your piece as a comma separated coordinate (e.g 2,2) or type 'quit' to end the game";
+					cout << "Type where you want to put your piece as a comma separated coordinate (e.g 2,2) or type 'quit' to end the game " << endl;
+					cout << "Fuck"; 
 				}
 			}
 			else {
-				cout << "Type where you want to put your piece as a comma separated coordinate (e.g 2,2) or type 'quit' to end the game";
+				cout << "Type where you want to put your piece as a comma separated coordinate (e.g 2,2) or type 'quit' to end the game " << endl;
+				cout << "Fuck";
 			}
 
 		}
@@ -113,15 +132,17 @@ int TicTacToeGame::prompt(unsigned int& alpha, unsigned int& beta)
 
 
 int TicTacToeGame::turn() {
-	unsigned int userInputOne; 
-	unsigned int userInputTwo; 
+	unsigned int userOne, userTwo;
+	unsigned int& userInputOne = userOne; 
+	unsigned int& userInputTwo = userTwo; 
+	
 
-	if (playerXTurn) {
-	cout << "It is Player X's turn"; 
+	if ((turnNumber % 2) == 0) {
+	cout << " It is Player X's turn. " << endl; 
 	}
 
-	if (!playerXTurn) {
-	cout << "It is player O's turn.";
+	if ((turnNumber % 2) == 1) {
+	cout << " It is Player O's turn. " << endl;
 	}
 
 	while (true) {
@@ -130,19 +151,27 @@ int TicTacToeGame::turn() {
 			return quitGame;
 		}
 
-		if (userInputOne >= one && userInputOne <= three) {
+		else if (userInputOne >= one && userInputOne <= three) {
 			if (userInputTwo >= one && userInputTwo <= three) {
 				if (gameBoard[userInputOne][userInputTwo] == ' ') {
 
-					if (playerXTurn) {
+					if ((turnNumber % 2) == 0) {
 						gameBoard[userInputOne][userInputTwo] = 'X';
+						
+						turnNumber = turnNumber + 1;
+
+						cout << *this;
+						return success;
 
 					}
-					else {
+					else if ((turnNumber % 2) == 1) {
 						gameBoard[userInputOne][userInputTwo] = 'O';
+						
+						turnNumber = turnNumber + 1;
+						cout << *this;
+						return success;
 					}
-					cout << *this;
-					return success; 
+					
 				}
 
 			
@@ -158,7 +187,7 @@ int TicTacToeGame::turn() {
 
 	
 
-	playerXTurn = !playerXTurn; 
+	
 
 
 }
@@ -170,60 +199,40 @@ int TicTacToeGame::play() {
 
 	cout << *this;
 
-	int resultTurn = turn();
+	bool result = true;
 	
 
-	while (resultTurn == success) {
+	while (true) {
+		int resultTurn = turn();
+		if (resultTurn == quitGame) {
+			cout << "The user quit. There were " + to_string(turnNumber) + "turns played.";
+
+			return quitGame;
+			break;
+		}
 		if (done()) {
-			if (playerXTurn) {
-				cout << "Player O won the game.";
+			if ((turnNumber % 2) == 0) {
+				cout << " Player O won the game. ";
 			}
-			else {
-				cout << "Player X won the game.";
+			else if ((turnNumber % 2) == 1) {
+				cout << " Player X won the game. ";
 			}
-			
+			result = false; 
 			return success;
+			
 		}
 		else if (draw()) {
-			int counter = 0; 
-			for (int i = 1; i <= width - 2; i++) {
-
-				for (int j = 1; j <= height - 2; j++) {
-
-					if (gameBoard[i][j] != ' ') {
-						counter++;
-					}
-
-				}
-
-			}
-			cout << "There are no winning moves and the game is a draw, there have been " + to_string(counter) + "turns played.";
+			
+			cout << " There are no winning moves and the game is a draw, there have been " + to_string(turnNumber) + " turns played.";
 		
-		
+			result = false; 
 			return drawGame;
 		}
 
 		
 	}
 
-		if (resultTurn == quitGame) {
-			int counter = 0;
-			for (int i = 1; i <= width - 2; i++) {
-
-				for (int j = 1; j <= height - 2; j++) {
-
-					if (gameBoard[i][j] != ' ') {
-						counter++;
-					}
-
-				}
-
-			}
-			cout << "The user quit. There were" + to_string(counter) + "turns played.";
-
-			return quitGame;
-			
-		}
+		
 	
 	
 	
