@@ -20,6 +20,7 @@ int main(int argc, char * argv[])
 	if (argc == correctNumArgs) {
 	
 		string word = argv[inputName];
+		//second argument must be TicTacToe to play the game
 		if (word == "TicTacToe") {
 		     TicTacToeGame game; 
 			int playReturn = game.play(); 
@@ -28,6 +29,7 @@ int main(int argc, char * argv[])
 
 		}
 		else {
+			//returns correct input if input to play the game is incorrect
 			 return usageFunction(argv[programName], "Laboratory3.exe TicTacToe");
 		}
    }
