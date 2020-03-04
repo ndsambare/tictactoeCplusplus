@@ -19,6 +19,7 @@ public:
 	int prompt(unsigned int& alpha, unsigned int& beta);
 	int turn();
 	int play();
+	
 
 private:
 	char gameBoard[width][height];

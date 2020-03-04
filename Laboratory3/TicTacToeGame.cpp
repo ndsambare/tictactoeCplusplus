@@ -35,7 +35,7 @@ ostream& operator << (ostream& output, const TicTacToeGame& game) {
 		output << endl; 
 	}
 	cout << ' '; 
-	for (int k = 0; k < width; k++) {
+	for (unsigned int k = 0; k < width; k++) {
 	output << k; 
 	}
  
@@ -89,7 +89,7 @@ int TicTacToeGame::prompt(unsigned int& alpha, unsigned int& beta)
 	while (true) {
 		getline(cin, inputString);
 		
-		for (int i = 0; i < inputString.length(); i++) {
+		for (unsigned int i = 0; i < inputString.length(); i++) {
 			if (inputString[i] == ',') {
 				inputString[i] = ' ';
 				commaCount++;
@@ -132,8 +132,9 @@ int TicTacToeGame::prompt(unsigned int& alpha, unsigned int& beta)
 
 		}
 		else {
-			return quitGame;
 			cout << "Game is ended.";
+			return quitGame;
+			
 		}
 
 
@@ -252,6 +253,7 @@ int TicTacToeGame::play() {
 	
 	
 }
+
 
 
 
