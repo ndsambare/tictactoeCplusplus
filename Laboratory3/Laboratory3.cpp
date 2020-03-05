@@ -20,10 +20,12 @@ int main(int argc, char * argv[])
 	if (argc == correctNumArgs) {
 	
 		string word = argv[inputName];
+		
 		//second argument must be TicTacToe to play the game
+		
 		if (word == "TicTacToe") {
 		     TicTacToeGame game; 
-			int playReturn = game.play(); 
+			int playReturn = game.play(false); 
 			return playReturn; 
 
 
@@ -33,6 +35,27 @@ int main(int argc, char * argv[])
 			 return usageFunction(argv[programName], "Laboratory3.exe TicTacToe");
 		}
    }
+	else if (argc == autoPlayer) {
+		string word = argv[inputName];
+		string wordTwo = argv[two];
+
+		if (word == "TicTacToe" && wordTwo == "auto_player") {
+			TicTacToeGame game;
+			int playReturn = game.play(true);
+			return playReturn;
+
+
+		}
+		else {
+			//returns correct input if input to play the game is incorrect
+			return usageFunction(argv[programName], "Laboratory3.exe TicTacToe auto_player");
+		}
+
+	}
+	else {
+		//returns correct input if input to play the game is incorrect
+		return usageFunction(argv[programName], "Laboratory3.exe TicTacToe auto_player");
+	}
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

@@ -11,14 +11,15 @@ class TicTacToeGame {
 	friend ostream& operator << (ostream& output, const TicTacToeGame& game);
 
 
-
 public:
 	TicTacToeGame();
 	bool done();
 	bool draw();
 	int prompt(unsigned int& alpha, unsigned int& beta);
 	int turn();
-	int play();
+	int play(bool ifAuto);
+	pair<int,int> auto_player(); 
+	int turnAuto(); 
 	
 
 private:

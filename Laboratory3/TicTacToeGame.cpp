@@ -4,6 +4,10 @@
 #include "TicTacToeGame.h"
 #include <sstream>
 #include "Errors.h"
+#include <vector>
+#include <stdlib.h>
+#include <time.h>
+#include <time.h>
 
 using namespace std;
 //TicTacToe constructor, sets initial game board dimensions while creating empty game board and number of turns to 0 at the beginning. 
@@ -164,6 +168,7 @@ int TicTacToeGame::turn() {
 	}
 
 	while (true) {
+		
 
 		if (prompt(userInputOne, userInputTwo) == quitGame) {
 			return quitGame;
@@ -174,6 +179,7 @@ int TicTacToeGame::turn() {
 				if (gameBoard[userInputOne][userInputTwo] == ' ') {
 
 					if ((turnNumber % 2) == zero) {
+						
 						gameBoard[userInputOne][userInputTwo] = 'X';
 						
 						turnNumber = turnNumber + 1;
@@ -210,7 +216,86 @@ int TicTacToeGame::turn() {
 
 }
 
-int TicTacToeGame::play() {
+
+int TicTacToeGame::turnAuto() {
+	unsigned int userOne, userTwo;
+	unsigned int& userInputOne = userOne;
+	unsigned int& userInputTwo = userTwo;
+
+	//uses turnNumber to determine who's turn it is as turns alternate between player X and player O
+	if ((turnNumber % 2) == zero) {
+		cout << " It is Player X's turn. " << endl;
+	}
+
+	if ((turnNumber % 2) == one) {
+		cout << " It is Player O's turn. " << endl;
+	}
+
+	while (true) {
+		
+
+	if ((turnNumber % 2) == one) {
+		
+		pair<int,int> coordinates = auto_player();
+		if (gameBoard[coordinates.first][coordinates.second] == ' ' && gameBoard[coordinates.first][coordinates.second] != 'X' && gameBoard[coordinates.first][coordinates.second] != 'O') {
+			gameBoard[coordinates.first][coordinates.second] = 'O';
+		}
+		
+		
+		
+		cout << *this;
+		turnNumber++;
+		return success;
+	}
+	else {
+		if (prompt(userInputOne, userInputTwo) == quitGame) {
+			return quitGame;
+		}
+
+		if (userInputOne >= one && userInputOne <= three) {
+			if (userInputTwo >= one && userInputTwo <= three) {
+				if (gameBoard[userInputOne][userInputTwo] == ' ') {
+
+					if ((turnNumber % 2) == zero) {
+
+						gameBoard[userInputOne][userInputTwo] = 'X';
+
+						turnNumber++;
+
+						cout << *this;
+						return success;
+
+					}
+
+
+				}
+
+
+
+			}
+		}
+
+
+
+
+	}
+
+	}
+
+
+		
+		
+	
+
+
+
+
+
+
+
+}
+
+int TicTacToeGame::play(bool ifAuto) {
 
 
 
@@ -219,11 +304,18 @@ int TicTacToeGame::play() {
 	//prints out the game board at the beginning
 
 	bool result = true;
-	
+
 	//loop calls turn, done, and draw repeatedly to keep progressing through the game
 	while (true) {
-		
-		int resultTurn = turn();
+		int resultTurn;
+	
+
+		if (ifAuto) {
+			resultTurn = turnAuto();
+		}
+		else {
+			resultTurn = turn();
+		}
 		if (resultTurn == quitGame) {
 			cout << "The user quit. There were " + to_string(turnNumber) + " turns played.";
 
@@ -238,28 +330,99 @@ int TicTacToeGame::play() {
 			else if ((turnNumber % 2) == one) {
 				cout << " Player X won the game. ";
 			}
-			result = false; 
+			result = false;
 			return success;
-			
+
 		}
 		//checks if game is a draw
 		else if (draw()) {
-			
+
 			cout << " There are no winning moves and the game is a draw, there have been " + to_string(turnNumber) + " turns played.";
-		
-			result = false; 
+
+			result = false;
 			return drawGame;
 		}
-
 		
+
+
 	}
-
-		
-	
-	
-	
-	
 }
+
+
+
+
+
+
+
+
+
+
+
+	pair<int,int> TicTacToeGame::auto_player() {
+		
+		TicTacToeGame t = *this;
+		cout << t << endl;
+			//CPU will be the O's and human will be the X'
+				for (int i = 1; i <= 3; i++) {
+					for (int j = 1; j <= 3; j++) {
+						//checks if putting an O down will win the game and puts it down if thats the case
+						if (t.gameBoard[i][j] == ' ') {
+							t.gameBoard[i][j] = 'O';
+							if (t.done()) {
+								return { i,j };
+							}
+							else {
+								t.gameBoard[i][j] = ' ';
+							}
+						}
+						
+					}
+				}
+
+				for (int i = 1; i <= 3; i++) {
+					for (int j = 1; j <= 3; j++) {
+						//checks if putting an X down will win the game and puts an O in the spot if thats the case
+						if (t.gameBoard[i][j] == ' ') {
+							t.gameBoard[i][j] = 'X';
+							if (t.done()) {
+								t.gameBoard[i][j] = ' ';
+								t.gameBoard[i][j] = 'O';
+
+								return { i,j };
+							}
+							else {
+
+								t.gameBoard[i][j] = ' ';
+
+							}
+						}
+					}
+				}
+				srand(time(NULL));
+				
+				int xRandom = rand() % 3 + 1;
+				int yRandom = rand() % 3 + 1;
+					
+				while (t.gameBoard[xRandom][yRandom] != ' ' && (t.gameBoard[xRandom][yRandom] == 'X' || t.gameBoard[xRandom][yRandom] == 'O')) {
+				 xRandom = rand() % 3 + 1;
+				  yRandom = rand() % 3 + 1;
+					
+				}
+				
+
+				t.gameBoard[xRandom][yRandom] = 'O';
+
+				return { xRandom,yRandom };
+			
+		
+
+
+
+
+
+
+
+	}
 
 
 
