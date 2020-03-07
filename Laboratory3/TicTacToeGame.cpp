@@ -116,23 +116,23 @@ int TicTacToeGame::prompt(unsigned int& alpha, unsigned int& beta)
 							return success;
 						}
 						else {
-							cout << "Type where you want to put your piece as a comma separated coordinate (e.g 2,2) or type 'quit' to end the game " << endl;
+							cout << "Type where you want to put your piece as a comma separated coordinate (e.g 2,2) or type 'quit' to end the game ";
 						}
 						
 					}
 					else {
-						cout << "Type where you want to put your piece as a comma separated coordinate (e.g 2,2) or type 'quit' to end the game " << endl;
+						cout << "Type where you want to put your piece as a comma separated coordinate (e.g 2,2) or type 'quit' to end the game ";
 					}
 					
 					
 				}
 				else {
-					cout << "Type where you want to put your piece as a comma separated coordinate (e.g 2,2) or type 'quit' to end the game " << endl;
+					cout << "Type where you want to put your piece as a comma separated coordinate (e.g 2,2) or type 'quit' to end the game ";
 					
 				}
 			}
 			else {
-				cout << "Type where you want to put your piece as a comma separated coordinate (e.g 2,2) or type 'quit' to end the game " << endl;
+				cout << "Type where you want to put your piece as a comma separated coordinate (e.g 2,2) or type 'quit' to end the game " ;
 				
 			}
 
@@ -198,21 +198,10 @@ int TicTacToeGame::turn() {
 					
 				}
 
-			
-
 			}
-		}
-			
-
-		
+		}		
 		
 	}
-
-
-	
-
-	
-
 
 }
 
@@ -232,21 +221,18 @@ int TicTacToeGame::turnAuto() {
 	}
 
 	while (true) {
-		
-
 	if ((turnNumber % 2) == one) {
 		
+		//gathers the pair of coordinates returned by the autoplayer() method
 		pair<int,int> coordinates = auto_player();
 		if (gameBoard[coordinates.first][coordinates.second] == ' ' && gameBoard[coordinates.first][coordinates.second] != 'X' && gameBoard[coordinates.first][coordinates.second] != 'O') {
 			gameBoard[coordinates.first][coordinates.second] = 'O';
-		}
-		
-		
-		
+		}	
 		cout << *this;
 		turnNumber++;
 		return success;
 	}
+	//it is now the human's turn 
 	else {
 		if (prompt(userInputOne, userInputTwo) == quitGame) {
 			return quitGame;
@@ -267,18 +253,12 @@ int TicTacToeGame::turnAuto() {
 
 					}
 
-
 				}
-
-
 
 			}
 		}
 
-
-
-
-	}
+	    }
 
 	}
 
@@ -296,9 +276,6 @@ int TicTacToeGame::turnAuto() {
 }
 
 int TicTacToeGame::play(bool ifAuto) {
-
-
-
 
 	cout << *this;
 	//prints out the game board at the beginning
@@ -398,6 +375,7 @@ int TicTacToeGame::play(bool ifAuto) {
 						}
 					}
 				}
+				//puts down a random coordinate and ensures it is not already a piece there and that it is a space
 				srand(time(NULL));
 				
 				int xRandom = rand() % 3 + 1;
@@ -408,20 +386,9 @@ int TicTacToeGame::play(bool ifAuto) {
 				  yRandom = rand() % 3 + 1;
 					
 				}
-				
 
 				t.gameBoard[xRandom][yRandom] = 'O';
-
 				return { xRandom,yRandom };
-			
-		
-
-
-
-
-
-
-
 	}
 
 

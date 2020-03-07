@@ -51,3 +51,17 @@ Trial 13: I played the game so that no moves would remain and it would be a draw
 Trial 14: I played the game and halfway through I typed "quit" and the program did as expected and quit the game. 
 
 Trial 15: I played the game and halfway through I typed "qui" and the program did as expected and prompted the user again. 
+
+EXTRA CREDIT:
+I implemented the extra credit by first adding a boolean as an argument to the play method. If the argument boolean is true, then that would indicate that the game will run with the auto player. I changed the main method in the Laboratory3.cpp file so that it checks if the terminal argument
+includes "auto_player," and if it does then I would call the play method with the true boolean argument. If "auto_player" is not included in the terminal argument, then I would call the play method with the false argument parameter. In the TicTacToeGame.cpp file, I implemented 
+a turnAuto method that was very similar to the turn method, but instead of having the human provide input for both Player X and Player O, the turnAuto only requires that the human provides input for Player X. For player O, it relies on the auto_player() method that I implemented to provide the correct coordinates for 
+where the auto player (player O) should put down their piece. Finally, in the auto_player() method, I did an exhaustive check of the entire game board for two different scenarios. 
+I first checked through the entire game board and checked to see if a spot had a space. If a spot had a space, I used a copy of the gameboard to check if putting an O down at that spot would lead to Player O winning. 
+I used the done() method to check this. If the done() method returned true, then I would return the pair of coordinates where the done method returned true and use these as the spot for where the auto player would move. 
+If the done() method did not return true, then I would simply put a space back into the copy of the game board and move to the next spot. 
+Next, after checking if Player O could win, I had the method check if Player X would win anywhere and if they would, I had player O block player X. So, I iterated over all spots in the game board again that had a space. And if there was a space, then I would put an X in that spot. After putting the X in the spot, I would check to see 
+if the done() method returned true. If it did, then I would remove the X with a space, and then return the coordinates of that spot, so that the auto player (player O) would block X's winning move. 
+If the done() method returned false, then I would simply replace the X with another space. Finally, the final thing the auto_player method did was to randomly place a piece if there was no opportunity to win or block the X's. 
+
+When run with the extra credit portion, the output is the same as if run with the regular portion. The program says if the game is a draw, or if someone wins. Also, when it is the human's turn, the program keeps reprompting if there is any bad input. 
